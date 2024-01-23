@@ -1,0 +1,26 @@
+%reg_weighting
+  %h1= "This partial registration number reminds you of #{@node["name"]}"
+  %h3= "#{@reg_piece["content"]}"
+  = form_for @user_input, url: update_reg_weight_submit_path do |form|
+    %table{border:1}
+      %tr
+        %td= "STRONGLY DISAGREE"
+        %td= "SOMEWHAT DISAGREE"
+        %td= "NEITHER AGREE OR DISAGREE"
+        %td= "SOMEWHAT AGREE"
+        %td= "STRONGLY AGREE"
+      %tr
+        %td
+          = form.radio_button("response", -50)
+        %td
+          = form.radio_button("response", -25)
+        %td
+          = form.radio_button("response", 0)
+        %td
+          = form.radio_button("response", 25)
+        %td
+          = form.radio_button("response", 50)
+    %br
+    = form.submit "Submit"
+
+  = link_to "Back to nodes", update_reg_weight_start_path

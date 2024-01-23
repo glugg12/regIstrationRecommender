@@ -1,0 +1,24 @@
+%update_weighting
+  %h1= "These nodes are closely related topics."
+  %h3= "#{@node1["name"]} and #{@node2["name"]}"
+  = form_for @user_response, url: update_weight_submit_path do |form|
+    %table{border:1}
+      %tr
+        %td= "STRONGLY DISAGREE"
+        %td= "SOMEWHAT DISAGREE"
+        %td= "NEITHER AGREE OR DISAGREE"
+        %td= "SOMEWHAT AGREE"
+        %td= "STRONGLY AGREE"
+      %tr
+        %td
+          = form.radio_button("response", -50)
+        %td
+          = form.radio_button("response", -25)
+        %td
+          = form.radio_button("response", 0)
+        %td
+          = form.radio_button("response", 25)
+        %td
+          = form.radio_button("response", 50)
+    %br
+    = form.submit "Submit"

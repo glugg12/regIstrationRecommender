@@ -1,0 +1,6 @@
+%rec
+  %h1= "Recommendations for this plate:"
+  %table
+    - @recommendations.each do |rec|
+      %tr
+        %td= rec["content"]

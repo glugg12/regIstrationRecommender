@@ -1,0 +1,28 @@
+%view_node
+  %h1= @node["name"]
+  %h2= "ID: #{@node["id"]}"
+  %tables{ style: "display: flex"}
+    %table
+      %tr
+        %td= "NODE RELATIONS"
+      %tr
+        %td= "ID"
+        %td= "NODE NAME"
+        %td= "WEIGHTING"
+      - @node_relations.each do |node|
+        %tr
+          %td= node["node"]["id"]
+          %td= node["node"]["name"]
+          %td= node["weighting"]
+    %table
+      %tr
+        %td="REG PIECES"
+      %tr
+        %td= "ID"
+        %td= "CONTENT"
+        %td= "WEIGHTING"
+      - @node_reg.each do |node|
+        %tr
+          %td= node["id"]
+          %td= node["content"]
+          %td= node["weighting"]

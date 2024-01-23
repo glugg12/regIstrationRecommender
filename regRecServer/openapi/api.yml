@@ -1,0 +1,451 @@
+openapi: "3.0.3"
+info:
+  title: regReccServer
+  description: Registration Recommendation System
+  version: 0.0.1
+servers:
+  - url: https://localhost:8080
+paths:
+  /element-node:
+    get:
+      summary: Retrieve all element nodes
+      operationId: getAllElementNodeGET
+      tags:
+        - element-node
+      responses:
+        "200":
+          description: OK
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ElementNodeResponseDto"
+    post:
+      summary: add element node
+      operationId: addElementNodePOST
+      tags:
+        - element-node
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/ElementNodeRequestDto"
+      responses:
+        "200":
+          description: ok
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ElementNodeResponseDto"
+  /edge:
+    get:
+      summary: Retrieve all edges
+      operationId: getAllEdgeGET
+      tags:
+        - edge
+      responses:
+        "200":
+          description: OK
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/EdgeResponseDto"
+    post:
+      summary: add edge
+      operationId: addEdgePOST
+      tags:
+        - edge
+      requestBody:
+        required: true
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/EdgeRequestDto"
+      responses:
+        "200":
+          description: OK
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/EdgeResponseDto"
+        "400":
+          description: Bad Request
+
+  /edge/{edgeId}/weighting:
+    post:
+      summary: add to edge weighting
+      operationId: addEdgeWeightingSamplePOST
+      parameters:
+        - in: path
+          name: edgeId
+          schema:
+            type: integer
+          required: true
+          description: The id of the edge
+      tags:
+        - edge
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/EdgeWeightingSampleRequestDto"
+      responses:
+        "200":
+          description: ok
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/EdgeResponseDto"
+
+  /edge/pairing:
+    get:
+      summary: get edge by node pairing
+      operationId: getEdgeByPairingGET
+      parameters:
+        - in: query
+          name: node1
+          schema:
+            type: integer
+          required: true
+          description: node1 id
+        - in: query
+          name: node2
+          schema:
+            type: integer
+          required: true
+          description: node2 id
+      responses:
+        "200":
+          description: ok
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/EdgeResponseDto"
+  /RegPiece:
+    get:
+      summary: Retrieve all partial registrations
+      operationId: getAllRegPieceGET
+      tags:
+        - reg-piece
+      responses:
+        "200":
+          description: OK
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RegPieceDto"
+    post:
+      summary: Add a reg piece
+      operationId: addNewRegPiecePOST
+      tags:
+        - reg-piece
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/AddRegPieceRequestDto"
+      responses:
+        "200":
+          description: OK
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/RegPieceDto"
+
+  /RegPiece/{regId}/weighting:
+    post:
+      summary: update reg piece weighting to parent
+      parameters:
+        - in: path
+          name: regId
+          schema:
+            type: integer
+          required: true
+          description: The id of the reg
+      operationId: updateRegWeightingPOST
+      tags:
+        - reg-piece
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/UpdateRegWeightingRequestDto"
+      responses:
+        "200":
+          description: OK
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/RegPieceDto"
+
+  /element-node/{nodeId}:
+    get:
+      summary: Get node by id
+      parameters:
+        - in: path
+          name: nodeId
+          schema:
+            type: integer
+          required: true
+          description: The id of the node
+      operationId: getNodeByIdGET
+      tags:
+        - element-node
+      responses:
+        "200":
+          description: OK
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ElementNodeResponseDto"
+
+  /element-node/{nodeId}/closestNode:
+    get:
+      summary: Get closest node to this one
+      parameters:
+        - in: path
+          name: nodeId
+          schema:
+            type: integer
+          required: true
+          description: The id of the node
+      operationId: getClosestNodeGET
+      tags:
+        - element-node
+      responses:
+        "200":
+          description: OK
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ElementNodeResponseDto"
+
+  /element-node/{nodeId}/regPieces:
+    get:
+      summary: Get closest node to this one
+      parameters:
+        - in: path
+          name: nodeId
+          schema:
+            type: integer
+          required: true
+          description: The id of the node
+      operationId: getNodeRegPiecesGET
+      tags:
+        - element-node
+      responses:
+        "200":
+          description: OK
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RegPieceDto"
+
+  /element-node/{nodeId}/nodeList:
+    get:
+      summary: Get list of related nodes
+      parameters:
+        - in: path
+          name: nodeId
+          schema:
+            type: integer
+          required: true
+          description: The id of the node
+      operationId: getAttachedNodesGET
+      tags:
+        - element-node
+      responses:
+        "200":
+          description: OK
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ElementNodeRelationDto"
+
+  /recommend:
+    get:
+      summary: get a list of recommendations for reg plates given a node
+      parameters:
+        - in: query
+          name: nodeId
+          schema:
+            type: integer
+          required: true
+          description: The id of the node
+      operationId: getRecommendedGET
+      responses:
+        "200":
+          description: OK
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RecommendationsResponseDto"
+
+  /recommend/dijkstra:
+    get:
+      summary: get a list of recommendations for reg plates given a node
+      parameters:
+        - in: query
+          name: nodeId
+          schema:
+            type: integer
+          required: true
+          description: The id of the node
+        - in: query
+          name: destId
+          schema:
+            type: integer
+          required: true
+          description: The id of the node
+      operationId: getDijkstraRecommendedGET
+      responses:
+        "200":
+          description: OK
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RecommendationsResponseDto"
+components:
+  schemas:
+    ApiError:
+      type: object
+      properties:
+        title:
+          type: string
+        message:
+          type: string
+        detail:
+          type: string
+    ElementNodeResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "name"
+    EdgeResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        Node1:
+          $ref: "#/components/schemas/ElementNodeResponseDto"
+        Node2:
+          $ref: "#/components/schemas/ElementNodeResponseDto"
+        weighting:
+          type: number
+          example: 9.8
+        sampleSize:
+          type: integer
+          example: 5
+    RegPieceDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        parent:
+          $ref: "#/components/schemas/ElementNodeResponseDto"
+        size:
+          type: integer
+          example: 9
+        content:
+          type: string
+          example: "Reg"
+        weighting:
+          type: number
+        sampleSize:
+          type: integer
+    ElementNodeRelationDto:
+      type: object
+      properties:
+        node:
+          $ref: "#/components/schemas/ElementNodeResponseDto"
+        weighting:
+          type: number
+          example: 54.7
+    ElementNodeRequestDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: node name
+      required:
+        - name
+    EdgeRequestDto:
+      type: object
+      required:
+        - node1
+        - node2
+      properties:
+        weighting:
+          type: number
+          example: 34.2
+        sampleSize:
+          type: integer
+          example: 13
+        node1:
+          type: integer
+          example: 1
+        node2:
+          type: integer
+          example: 2
+    EdgeWeightingSampleRequestDto:
+      type: object
+      properties:
+        weighting:
+          type: number
+          example: 0.5
+      required:
+        - weighting
+    AddRegPieceRequestDto:
+      type: object
+      properties:
+        content:
+          type: string
+          minLength: 1
+          maxLength: 7
+          example: REG
+        parentNodeId:
+          type: integer
+          example: 1
+        weighting:
+          type: number
+          example: 0.5
+        sampleSize:
+          type: integer
+          example: 1
+      required:
+        - content
+        - parentNodeId
+    UpdateRegWeightingRequestDto:
+      type: object
+      properties:
+        weighting:
+          type: number
+          example: 56.9
+      required:
+        - weighting
+    RecommendationsResponseDto:
+      type: object
+      properties:
+        content:
+          type: string
+      required:
+        - content

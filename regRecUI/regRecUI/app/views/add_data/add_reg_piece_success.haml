@@ -1,0 +1,11 @@
+%add_reg_piece_success
+  %h1= "Added Reg Piece #{@reg_piece["content"]} at ID #{@reg_piece["id"]}"
+  %table
+    %tr
+      %td= @reg_piece["parent"]["id"]
+      %td= @reg_piece["parent"]["name"]
+    %tr
+      %td= @reg_piece["size"]
+
+  %a{href: @add_data_link, title: 'Test'} Add more data
+  %a{href: home_path} Home

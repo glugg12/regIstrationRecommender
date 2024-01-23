@@ -1,0 +1,13 @@
+%reg_piece_start
+  = form_for @add_reg_piece, url: add_reg_submit_path do |form|
+    %tables{ style: "display: flex"}
+      %table
+        - @all_nodes.each do |node|
+          %tr
+            %td= node["name"]
+            %td
+              = form.radio_button("parentNodeId", node["id"])
+    = form.label :content
+    = form.text_field :content
+
+    =form.submit

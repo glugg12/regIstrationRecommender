@@ -1,0 +1,16 @@
+%start
+  = form_for @choose_topic, url: recommendations_v2_submit_path do |form|
+    %tables{ style: "display: flex"}
+      %table
+        - @all_nodes.each do |node|
+          %tr
+            %td= node["name"]
+            %td
+              = form.radio_button("topic1", node["id"])
+      %table
+        - @all_nodes.each do |node|
+          %tr
+            %td= node["name"]
+            %td
+              = form.radio_button("topic2", node["id"])
+    = form.submit

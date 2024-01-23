@@ -1,0 +1,16 @@
+%edge_start
+  = form_for @add_edge, url: add_edge_submit_url do |form|
+    %tables{ style: "display: flex"}
+      %table
+        - @all_nodes.each do |node|
+          %tr
+            %td= node["name"]
+            %td
+              = form.radio_button("nodeId1", node["id"])
+      %table
+        - @all_nodes.each do |node|
+          %tr
+            %td= node["name"]
+            %td
+              = form.radio_button("nodeId2", node["id"])
+    = form.submit

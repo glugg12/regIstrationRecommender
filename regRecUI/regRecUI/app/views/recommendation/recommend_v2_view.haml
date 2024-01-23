@@ -1,0 +1,6 @@
+%rec
+  %h1= "Recommendations for the chosen topics: "
+  %table
+    - @recommendations_v2.each do |rec|
+      %tr
+        %td= rec["content"]

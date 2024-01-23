@@ -1,0 +1,12 @@
+%add_node_success
+  %h1= "Added new edge with ID #{@edge["id"]}"
+  %table
+    %tr
+      %td= @edge["Node1"]["id"]
+      %td= @edge["Node1"]["name"]
+    %tr
+      %td= @edge["Node2"]["id"]
+      %td= @edge["Node2"]["name"]
+
+  %a{href: @add_data_link, title: 'Test'} Add more data
+  %a{href: home_path} Home

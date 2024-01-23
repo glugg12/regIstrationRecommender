@@ -1,0 +1,6 @@
+%add_node
+  = form_for @node, url: submit_node_path do |form|
+    = form.label :name
+    = form.text_field :name
+
+    =form.submit

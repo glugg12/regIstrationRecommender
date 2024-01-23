@@ -1,0 +1,42 @@
+version: '3.1'
+services:
+  db:
+    ports:
+      - '5432:5432'
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: regRecc
+    volumes:
+      - ./regRecServer/data:/var/lib/postgresql/data
+
+  ui:
+    ports:
+      - "3000:3000"
+    build:
+      context: regRecUI/regRecUI
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    volumes:
+      - ./:/app
+    environment:
+      SECRET_KEY_BASE: "lmao I don't need this right now"
+      API_HOST: api:8080
+
+  api:
+    build:
+      context: ./regRecServer
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/regRecc
+      SPRING_DATASOURCE_USERNAME: "admin"
+      SPRING_DATASOURCE_PASSWORD: "admin123"
+      SPRING_JPA_HIBERNATE_DDL_AUTO: "update"
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: "org.hibernate.dialect.PostgreSQLDialect"
+    ports:
+      - "8080:8080"

@@ -1,0 +1,8 @@
+%reg_start
+  %h1= "For which node?"
+  %table
+    - @all_nodes.each do |node|
+      %tr
+        %td= node["name"]
+        %td
+          = link_to "Choose", update_reg_node_selected_path(:node => node["id"])
